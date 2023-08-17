@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply text-sm;
+  }
+
+  td {
+    @apply capitalize text-white/70;
+  }
+  thead td {
+    @apply text-white;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply flex gap-2 items-center text-white py-2 px-4 rounded-md;
+  }
+  .input {
+    @apply rounded-md border border-slate-600 bg-slate-700 bg-transparent p-2 outline-none focus:border-slate-300 placeholder:text-white/50 placeholder:text-sm;
+  }
+  .contaoner {
+    @apply max-w-[1000];
+  }
+}
+
+@layer utilities {
+  .btn-red {
+    @apply bg-rose-900 hover:bg-rose-800;
+  }
+  .btn-green {
+    @apply bg-green-600 hover:bg-green-800;
+  }
+}
