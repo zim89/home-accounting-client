@@ -1,16 +1,28 @@
 import { FC } from 'react';
 import TransactionForm from '../components/TransactionForm';
-import { ICategory, ITransaction } from '../types/types';
+import {
+  ICategory,
+  IResponseTransactionsLoader,
+  ITransaction,
+} from '../types/types';
 import { instance } from '../api/axios.api';
 import { toast } from 'react-toastify';
 import TransactionTable from '../components/TransactionTable';
+import { useLoaderData } from 'react-router-dom';
+import { formatToUSD } from '../helpers/currency.helper';
+import Chart from '../components/Chart';
 
 export const transactionsLoader = async () => {
   const categories = await instance.get<ICategory[]>('/categories');
   const transactions = await instance.get<ITransaction[]>('/transactions');
+  const totalIncome = await instance.get<number>('/transactions/income');
+  const totalExpense = await instance.get<number>('/transactions/expense');
+
   const data = {
     categories: categories.data,
     transactions: transactions.data,
+    totalIncome: totalIncome.data,
+    totalExpense: totalExpense.data,
   };
   return data;
 };
@@ -41,6 +53,9 @@ export const transactionsAction = async ({ request }: any) => {
 };
 
 const Transactions: FC = () => {
+  const { totalIncome, totalExpense } =
+    useLoaderData() as IResponseTransactionsLoader;
+
   return (
     <>
       <div className="mt-4 grid grid-cols-3 items-start gap-4">
@@ -57,7 +72,7 @@ const Transactions: FC = () => {
                 Total Income:
               </p>
               <p className="mt-2 rounded-sm bg-green-600 p-1 text-center">
-                1000$
+                {formatToUSD.format(totalIncome)}
               </p>
             </div>
             <div>
@@ -65,13 +80,15 @@ const Transactions: FC = () => {
                 Total Expense:
               </p>
               <p className="mt-2 rounded-sm bg-red-500 p-1 text-center">
-                1000$
+                {formatToUSD.format(totalExpense)}
               </p>
             </div>
           </div>
 
           {/* Chart */}
-          <>Chart:</>
+          <div className="flex justify-center">
+            <Chart totalExpense={totalExpense} totalIncome={totalIncome} />
+          </div>
         </div>
       </div>
 

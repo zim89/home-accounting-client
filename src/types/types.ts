@@ -44,4 +44,6 @@ export interface ITransaction {
 export interface IResponseTransactionsLoader {
   categories: ICategory[];
   transactions: ITransaction[];
+  totalIncome: number;
+  totalExpense: number;
 }
