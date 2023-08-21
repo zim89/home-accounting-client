@@ -6,12 +6,13 @@ import Categories, {
   categoriesAction,
   categoriesLoader,
 } from '../pages/Categories';
-import Transactions, {
-  transactionsAction,
-  transactionsLoader,
-} from '../pages/Transactions';
+import Transactions from '../pages/Transactions';
 import Auth from '../pages/Auth';
 import ProtectedRoute from '../components/ProtectedRoute';
+import {
+  transactionsAction,
+  transactionsLoader,
+} from '../services/transaction.service';
 
 export const router = createBrowserRouter([
   {
